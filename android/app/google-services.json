@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "388151545790",
+    "project_id": "expiry-8c00f",
+    "storage_bucket": "expiry-8c00f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:388151545790:android:066106f81b5097a85573ef",
+        "android_client_info": {
+          "package_name": "com.example.expiry_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAI9YLF9CKG-7eCskEfZu5AC7gnAW6Ohxc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
