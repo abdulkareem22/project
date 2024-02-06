@@ -128,7 +128,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     // ignore: duplicate_ignore
     if (confirmDelete == true) {
-      // ignore: avoid_print
+      
       print('Deleting all expired items...');
       // Implement the logic to delete all expired items
     }

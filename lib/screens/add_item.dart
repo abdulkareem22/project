@@ -141,6 +141,9 @@ class _AddItemPageState extends State<AddItemPage> {
 
   Widget _buildDropDown(
       String label, List<String> items, TextEditingController controller) {
+    List<String> selectedDays =
+        controller.text.isNotEmpty ? controller.text.split(',').toList() : [];
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 16.0),
       child: Row(
@@ -157,17 +160,34 @@ class _AddItemPageState extends State<AddItemPage> {
           Expanded(
             flex: 2,
             child: DropdownButtonFormField<String>(
-              value: controller.text.isNotEmpty ? controller.text : null,
+              value: null, // Set to null to prevent automatic selection
               items: items.map((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
-                  child: Text(value),
+                  child: Row(
+                    children: [
+                      Checkbox(
+                        value: selectedDays.contains(value),
+                        onChanged: (bool? checked) {
+                          setState(() {
+                            if (checked != null) {
+                              if (checked) {
+                                selectedDays.add(value);
+                              } else {
+                                selectedDays.remove(value);
+                              }
+                              controller.text = selectedDays.join(',');
+                            }
+                          });
+                        },
+                      ),
+                      Text(value),
+                    ],
+                  ),
                 );
               }).toList(),
               onChanged: (String? newValue) {
-                setState(() {
-                  controller.text = newValue ?? '';
-                });
+                // Do nothing when the overall dropdown value changes
               },
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
@@ -252,7 +272,8 @@ class _AddItemPageState extends State<AddItemPage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const AllItemList(), // Replace with the actual page for displaying saved items
+        builder: (context) =>
+            const AllItemList(), // Replace with the actual page for displaying saved items
       ),
     );
   }
