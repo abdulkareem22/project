@@ -1,11 +1,14 @@
 // settings.dart
 
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _SettingsScreenState createState() => _SettingsScreenState();
 }
 
@@ -123,7 +126,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
       },
     );
 
+    // ignore: duplicate_ignore
     if (confirmDelete == true) {
+      // ignore: avoid_print
       print('Deleting all expired items...');
       // Implement the logic to delete all expired items
     }

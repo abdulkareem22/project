@@ -4,6 +4,7 @@ class AllItemsList extends StatefulWidget {
   const AllItemsList({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _AllItemsListState createState() => _AllItemsListState();
 }
 
@@ -67,7 +68,7 @@ class _AllItemsListState extends State<AllItemsList> {
                   }).toList(),
                 ),
                 const SizedBox(width: 16.0),
-                Text('Sort by:'),
+                const Text('Sort- by:'),
                 const SizedBox(width: 8.0),
                 IconButton(
                   icon: sortAscending

@@ -11,14 +11,15 @@ class ExpireSoonList extends StatefulWidget {
   const ExpireSoonList({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _ExpireSoonListState createState() => _ExpireSoonListState();
 }
 
 class _ExpireSoonListState extends State<ExpireSoonList> {
   List<Product> products = [
-    Product(name: 'Fruits', expiryDate: DateTime.now().add(Duration(days: 5))),
-    Product(name: 'Vegetables', expiryDate: DateTime.now().add(Duration(days: 3))),
-    Product(name: 'Meat', expiryDate: DateTime.now().add(Duration(days: 7))),
+    Product(name: 'Fruits', expiryDate: DateTime.now().add(const Duration(days: 5))),
+    Product(name: 'Vegetables', expiryDate: DateTime.now().add(const Duration(days: 3))),
+    Product(name: 'Meat', expiryDate: DateTime.now().add(const Duration(days: 7))),
     // Add more products with different expiry dates
   ];
 

@@ -124,6 +124,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     ).show();
                                   }
                                 } catch (e) {
+                                  // ignore: use_build_context_synchronously
                                   signUpAlert(
                                       context: context,
                                       onPressed: () {

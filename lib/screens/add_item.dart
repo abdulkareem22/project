@@ -1,24 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 class AddItemPage extends StatefulWidget {
   const AddItemPage({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _AddItemPageState createState() => _AddItemPageState();
 }
 
 class _AddItemPageState extends State<AddItemPage> {
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _expiryDateController = TextEditingController();
-  TextEditingController _reminderController = TextEditingController();
-  TextEditingController _groupController = TextEditingController();
-  TextEditingController _noteController = TextEditingController();
-  TextEditingController _priceController = TextEditingController();
-  TextEditingController _manufactureDateController = TextEditingController();
-  TextEditingController _quantityController = TextEditingController();
-  TextEditingController _contactController = TextEditingController();
+  late ImagePicker _imagePicker;
+  XFile? _imageFile;
 
-  List<String> _daysOfWeek = [
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _expiryDateController = TextEditingController();
+  final TextEditingController _reminderController = TextEditingController();
+  final TextEditingController _groupController = TextEditingController();
+  final TextEditingController _noteController = TextEditingController();
+  final TextEditingController _priceController = TextEditingController();
+  final TextEditingController _manufactureDateController =
+      TextEditingController();
+  final TextEditingController _quantityController = TextEditingController();
+  final TextEditingController _contactController = TextEditingController();
+
+  final List<String> _daysOfWeek = [
     'Monday',
     'Tuesday',
     'Wednesday',
@@ -28,7 +36,7 @@ class _AddItemPageState extends State<AddItemPage> {
     'Sunday',
   ];
 
-  List<String> _groups = [
+  final List<String> _groups = [
     'Fruits',
     'Vegetables',
     'Meat',
@@ -37,6 +45,12 @@ class _AddItemPageState extends State<AddItemPage> {
     'Bakery',
     'Beauty Products',
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _imagePicker = ImagePicker();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +64,16 @@ class _AddItemPageState extends State<AddItemPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              GestureDetector(
+                onTap: _getImage,
+                child: _imageFile != null
+                    ? Image.file(File(_imageFile!.path))
+                    : const Icon(
+                        Icons.camera_alt,
+                        color: Colors.blue,
+                        size: 68,
+                      ),
+              ),
               _buildTextField('Name', _nameController),
               _buildDatePicker('Expiry Date', _expiryDateController),
               _buildDropDown('Reminder', _daysOfWeek, _reminderController),
@@ -60,10 +84,18 @@ class _AddItemPageState extends State<AddItemPage> {
               _buildTextField('Quantity', _quantityController),
               _buildTextField('Contact', _contactController),
               const SizedBox(height: 20),
+              ElevatedButton.icon(
+                onPressed: () async {
+                  String barcode = await _scanBarcode();
+                  _nameController.text = barcode;
+                },
+                icon: const Icon(Icons.qr_code_scanner),
+                label: const Text('Scan Barcode'),
+              ),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  // Add logic to save the item
-                  // You can access the entered values using _nameController.text, _expiryDateController.text, etc.
+                  _saveItem();
                 },
                 child: const Text('Save Item'),
               ),
@@ -186,6 +218,53 @@ class _AddItemPageState extends State<AddItemPage> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Future<String> _scanBarcode() async {
+    try {
+      String barcodeScanResult = await FlutterBarcodeScanner.scanBarcode(
+          '#ff6666', 'Cancel', true, ScanMode.BARCODE);
+      return barcodeScanResult;
+    } catch (e) {
+      return 'Error: $e';
+    }
+  }
+
+  void _getImage() async {
+    final XFile? image =
+        await _imagePicker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      _imageFile = image;
+    });
+  }
+
+  void _saveItem() {
+    // Add logic to save the item
+    // You can access the entered values using _nameController.text, _expiryDateController.text, etc.
+
+    // After saving, navigate to a new page to display saved items
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const AllItemList(), // Replace with the actual page for displaying saved items
+      ),
+    );
+  }
+}
+
+class AllItemList extends StatelessWidget {
+  const AllItemList({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Saved Items'),
+      ),
+      body: const Center(
+        child: Text('Display saved items here'),
       ),
     );
   }
