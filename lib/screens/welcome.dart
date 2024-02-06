@@ -2,10 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:expiry_app/screens/add_item.dart';
 import 'package:expiry_app/screens/settings.dart';
-import 'package:expiry_app/screens/all_item_list.dart';
-import 'package:expiry_app/screens/expire_soon.dart';
-import 'package:expiry_app/screens/expired_list.dart';
-import 'package:expiry_app/screens/inventory.dart';
 
 void main() {
   runApp(const MaterialApp(
@@ -60,6 +56,7 @@ class WelcomeScreen extends StatelessWidget {
             'Items Sold',
             Icons.shopping_cart,
             ItemsSoldList.id,
+            
           ),
           Padding(
             padding: const EdgeInsets.all(16.0),

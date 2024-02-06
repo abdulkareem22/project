@@ -7,7 +7,6 @@ class AddItemPage extends StatefulWidget {
   const AddItemPage({Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
   _AddItemPageState createState() => _AddItemPageState();
 }
 
@@ -84,21 +83,26 @@ class _AddItemPageState extends State<AddItemPage> {
               _buildTextField('Quantity', _quantityController),
               _buildTextField('Contact', _contactController),
               const SizedBox(height: 20),
-              ElevatedButton.icon(
-                onPressed: () async {
-                  String barcode = await _scanBarcode();
-                  _nameController.text = barcode;
-                },
-                icon: const Icon(Icons.qr_code_scanner),
-                label: const Text('Scan Barcode'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ElevatedButton.icon(
+                    onPressed: () async {
+                      String barcode = await _scanBarcode();
+                      _nameController.text = barcode;
+                    },
+                    icon: const Icon(Icons.qr_code_scanner),
+                    label: const Text('Scan Barcode'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      _saveItem();
+                    },
+                    child: const Text('Save Item'),
+                  ),
+                ],
               ),
               const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  _saveItem();
-                },
-                child: const Text('Save Item'),
-              ),
             ],
           ),
         ),
